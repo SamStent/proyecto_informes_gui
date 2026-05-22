@@ -1,0 +1,28 @@
+# Entorno virtual de Poetry
+.pypoetry/
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Archivos de compilación
+build/
+dist/
+*.spec
+
+# Configuración de IDEs
+.vscode/
+.idea/

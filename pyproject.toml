@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "proyecto_informes"
+version = "0.1.0"
+description = "Proyecto de informes con GUI en PySide6"
+authors = ["Federico Wuttke"]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.15"
+pyside6 = "^6.11.1"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
