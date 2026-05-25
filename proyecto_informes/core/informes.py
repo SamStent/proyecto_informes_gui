@@ -26,13 +26,13 @@ def leer_excel(ruta: str | Path, hoja: str | int | None = None) -> pd.DataFrame:
 # EXPORTACIÓN DE ARCHIVOS
 # -----------------------------
 
-def export_csv(df: pd.DataFrame, ruta: str | Path, sep: str = ","):
+def exportar_csv(df: pd.DataFrame, ruta: str | Path, sep: str = ","):
     """Exporta un DataFrame a CSV."""
     ruta = Path(ruta)
     df.to_csv(ruta, sep=sep, index=False)
 
 
-def export_excel(df: pd.DataFrame, ruta: str | Path, hoja: str = "Hoja1"):
+def exportar_excel(df: pd.DataFrame, ruta: str | Path, hoja: str = "Hoja1"):
     """Exporta un DataFrame a Excel."""
     ruta = Path(ruta)
     df.to_excel(ruta, sheet_name=hoja, index=False)
