@@ -1,38 +1,42 @@
-import pandas as pd
 from pathlib import Path
+import pandas as pd
 
-# ----------------------------
-# LECTURA DE ARCHIVOS
-# ----------------------------
-
-def leer_csv(ruta: str | Path, sep: str = ",") -> pd.DataFrame:
-    """Lee un archivo CSV y devuelve un DataFrame."""
+def detectar_tipo_archivo(ruta: str | Path) -> str:
+    """
+    Detecta si un archivo es CSV o Excel según su extensión.
+    """
     ruta = Path(ruta)
+
     if not ruta.exists():
-        raise FileNotFoundError(f"No se encontró el archivo CSV: {ruta}")
-    return pd.read_csv(ruta, sep=sep)
+        raise FileNotFoundError(f"No se encontró el archivo: {ruta}")
+
+    ext = ruta.suffix.lower()
+
+    if ext == ".csv":
+        return "csv"
+    if ext in (".xls", ".xlsx"):
+        return "excel"
+
+    raise ValueError(f"Extensión no soportada: {ext}")
 
 
-def leer_excel(ruta: str | Path, hoja: str | int | None = None) -> pd.DataFrame:
-    """Lee un archivo Excel y devuelve un DataFrame."""
+def leer_archivo(ruta: str | Path) -> pd.DataFrame:
+    """
+    Función genérica que detecta el tipo de archivo y llama a la función adecuada.
+    """
     ruta = Path(ruta)
+
+    # Validación de existencia
     if not ruta.exists():
-        raise FileNotFoundError(f"No se encontró el archivo Excel: {ruta}")
-    return pd.read_excel(ruta, sheet_name=hoja)
+        raise FileNotFoundError(f"No se encontró el archivo: {ruta}")
 
+    tipo = detectar_tipo_archivo(ruta)
 
+    if tipo == "csv":
+        return pd.read_csv(ruta)
 
-# -----------------------------
-# EXPORTACIÓN DE ARCHIVOS
-# -----------------------------
+    if tipo == "excel":
+        return pd.read_excel(ruta)
 
-def exportar_csv(df: pd.DataFrame, ruta: str | Path, sep: str = ","):
-    """Exporta un DataFrame a CSV."""
-    ruta = Path(ruta)
-    df.to_csv(ruta, sep=sep, index=False)
-
-
-def exportar_excel(df: pd.DataFrame, ruta: str | Path, hoja: str = "Hoja1"):
-    """Exporta un DataFrame a Excel."""
-    ruta = Path(ruta)
-    df.to_excel(ruta, sheet_name=hoja, index=False)
+    # Esto solo se ejecutaría si detectar_tipo_archivo fallara
+    raise ValueError(f"No se pudo determinar cómo leer el archivo: {ruta}")
